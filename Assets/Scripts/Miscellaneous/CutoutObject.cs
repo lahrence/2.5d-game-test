@@ -12,13 +12,11 @@ public class CutoutObject : MonoBehaviour
 
     private Camera mainCamera;
 
-    // Start is called before the first frame update
     void Awake()
     {
         mainCamera = GetComponent<Camera>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         Vector2 cutoutPos = mainCamera.WorldToViewportPoint(targetObject.position);

@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviour
     // Player Movement
     float speed = 4f;
 
-    float height = 1f;
+    [SerializeField] float height = 1f;
     float turnSmoothTime = 0.1f;
     float smoothTime = 0.1f;
     float turnSmoothVelocity;
@@ -24,14 +24,12 @@ public class PlayerController : MonoBehaviour
 
     string playerState;
 
-    // Start is called before the first frame update
     void Start()
     {
         cam = cameraObject.transform;
         animator = sprite.GetComponent<Animator>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         // Get controller input
