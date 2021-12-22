@@ -2,8 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AnimationController
+public static class AnimationController
 {
+    const float threshold = 22.5f;
+
     public static Dictionary<float, string> rotationValues = new Dictionary<float, string>()
         {
             { 0f, "Back"},
@@ -31,7 +33,6 @@ public class AnimationController
     public static string SpriteAnimationPerspective(float cameraOrbit, string animation, Animator animator, string currentState, float speed)
     {
         string newState = currentState;
-        float threshold = 22.5f; // 45 / 2
         animator.speed = speed;
         foreach (KeyValuePair<float, string> rotations in rotationValues)
         {
@@ -53,8 +54,6 @@ public class AnimationController
     {
         // Returns if new animation is the same as current
         if (currentState == newState) return currentState;
-        
-        // Get normalized animation time
         float time = AnimationTime(animator);
 
         // Play animation at normalized animation time
@@ -66,7 +65,6 @@ public class AnimationController
     private static float AnimationTime(Animator animator)
     {
         float rawTime = animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
-
         // Limit time to ranges 0 - 1
         float time = rawTime < 1 ? rawTime : rawTime - (int)rawTime;
         return time;

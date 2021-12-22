@@ -36,7 +36,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         GameObject[] npcObjects = GameObject.FindGameObjectsWithTag("NPC");
-        
+
         // Get controller input
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
@@ -51,7 +51,10 @@ public class PlayerController : MonoBehaviour
         float cameraOrbit = (cameraLocalRotationY <= playerLocalRotationY ?
                              playerLocalRotationY - cameraLocalRotationY :
                              360 + playerLocalRotationY - cameraLocalRotationY);
+
         float speedModifier = 1f;
+
+        // Player movement
         if (direction.magnitude >= 0.1f)
         {
             float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cameraLocalRotationY;
@@ -74,7 +77,12 @@ public class PlayerController : MonoBehaviour
         {
             playerState = AnimationController.animations["topHat"]["idle"];
         }
+        
         currentState = AnimationController.SpriteAnimationPerspective(cameraOrbit, playerState, animator, currentState, speedModifier * isCollided);
+        
+        if (NPCDialogueController.NPCDetect(npcObjects, gameObject) != null && Input.GetAxisRaw("Interact") >= 0.1f) {
+            print("A!");
+        }
     }
 
     void OnTriggerEnter(Collider other)
