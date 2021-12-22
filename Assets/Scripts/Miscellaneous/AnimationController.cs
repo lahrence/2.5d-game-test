@@ -22,7 +22,8 @@ public class AnimationController
             {"topHat", new Dictionary<string, string>()
                 {
                     {"walk", "topHatWalk"},
-                    {"idle", "topHatIdle"}
+                    {"idle", "topHatIdle"},
+                    {"pickup", "topHatPickUp"}
                 }
             }
         };
