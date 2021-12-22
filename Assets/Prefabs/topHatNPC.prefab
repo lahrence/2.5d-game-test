@@ -78,8 +78,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30be4e1f56ab6d043ba4f8415c038f14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sprite: {fileID: 5815251143880030164}
   cameraObject: {fileID: 0}
+  sprite: {fileID: 5815251143880030164}
+  npcName: topHat
 --- !u!114 &5815251142990704142
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -167,7 +168,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 632f956f0ecac544bbc4033c6e0ea165, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 1
+  m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 20.8, y: 31.207619}

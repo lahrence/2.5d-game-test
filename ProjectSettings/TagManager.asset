@@ -43,3 +43,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Obstacles
+    uniqueID: 2001434833
+    locked: 0
+  - name: Sprite
+    uniqueID: 3632681393
+    locked: 0

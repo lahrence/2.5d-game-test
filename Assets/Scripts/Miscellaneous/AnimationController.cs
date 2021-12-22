@@ -17,10 +17,14 @@ public class AnimationController
             { 360f, "Back"}
         };
 
-    public static Dictionary<string, string> animations = new Dictionary<string, string>() 
+    public static Dictionary<string, Dictionary<string, string>> animations = new Dictionary<string, Dictionary<string, string>>() 
         {
-            {"walk", "topHatWalk"},
-            {"idle", "topHatIdle"}
+            {"topHat", new Dictionary<string, string>()
+                {
+                    {"walk", "topHatWalk"},
+                    {"idle", "topHatIdle"}
+                }
+            }
         };
 
     public static string SpriteAnimationPerspective(float cameraOrbit,

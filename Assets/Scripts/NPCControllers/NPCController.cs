@@ -7,6 +7,7 @@ public class NPCController : MonoBehaviour
 
     public Camera cameraObject;
     [SerializeField] GameObject sprite;
+    [SerializeField] string npcName = "topHat";
     NPCDialogueController npcDialogueController;
     Transform cam;
 
@@ -19,7 +20,7 @@ public class NPCController : MonoBehaviour
     {
         cam = cameraObject.transform;
         animator = sprite.GetComponent<Animator>();
-        npcState = AnimationController.animations["idle"];
+        npcState = AnimationController.animations[npcName]["idle"];
     }
 
     void Update()

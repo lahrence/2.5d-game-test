@@ -16,7 +16,6 @@ public class NPCSpriteController : MonoBehaviour
 
     void Update()
     {
-        transform.LookAt(cam.transform);
-        transform.rotation = Quaternion.Euler(0f, transform.rotation.eulerAngles.y, 0f);
+        transform.rotation = Quaternion.Euler(0f, cam.transform.rotation.eulerAngles.y, 0f);
     }
 }
