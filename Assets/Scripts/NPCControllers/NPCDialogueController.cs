@@ -2,11 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NPCDialogueController : MonoBehaviour
+public static class NPCDialogueController
 {
-    public bool PlayerDetect(GameObject player)
+    public static GameObject NPCDetect(GameObject[] npcObjects, GameObject player)
     {
-        float distance = Vector3.Distance(player.transform.position, transform.position);
-        return distance <= 1.5;
+        float tempDistance = 0f;
+        GameObject closestNPC = null;
+        foreach (GameObject npc in npcObjects) {
+            float distance = Vector3.Distance(npc.transform.position, player.transform.position);
+            if (tempDistance == 0f) tempDistance = distance;
+            if (distance <= tempDistance && distance <= 1.5f) closestNPC = npc;
+        }
+        return(closestNPC);
     }
 }

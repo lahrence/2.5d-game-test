@@ -16,11 +16,8 @@ public class PlayerController : MonoBehaviour
     // Player Movement
     float speed = 3f;
 
-    [SerializeField] float height = 1f;
     float turnSmoothTime = 0.05f;
-    float smoothTime = 0.1f;
     float turnSmoothVelocity;
-    Vector3 smoothVelocity = Vector3.zero;
 
     string currentState;
 
@@ -38,12 +35,13 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        GameObject[] npcObjects = GameObject.FindGameObjectsWithTag("NPC");
+        
         // Get controller input
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
         float modifier = Input.GetAxisRaw("Multiplier");
-        Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized; 
-        
+        Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
 
         // Camera and Player local rotation assignment
         float cameraLocalRotationY = cam.eulerAngles.y;
@@ -68,10 +66,8 @@ public class PlayerController : MonoBehaviour
             if (modifier < 0.1f) speedModifier = totalOffset > 1 ? 1 : totalOffset;
             else speedModifier = totalOffset > 1 ? 1.5f : totalOffset * (modifier + 0.5f);
 
-            controller.Move(moveDir.normalized * speed * speedModifier * Time.deltaTime);
-            transform.position = Vector3.SmoothDamp(transform.position,
-                                                    new Vector3(transform.position.x, height, transform.position.z),
-                                                    ref smoothVelocity, smoothTime);
+            controller.SimpleMove(moveDir.normalized * speed * speedModifier);
+
             playerState = AnimationController.animations["topHat"]["walk"];
         }
         else
@@ -90,8 +86,4 @@ public class PlayerController : MonoBehaviour
     {
         isCollided = 1f;
     }
-
-    //private int WallCollide() {
-        //Physics.BoxCast(capsuleCollider.bounds.center, capsuleCollider.bounds.size, 0f, Vector3.forward, .1f, )
-    //}
 }

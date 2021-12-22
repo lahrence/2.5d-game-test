@@ -8,7 +8,6 @@ public class NPCController : MonoBehaviour
     public Camera cameraObject;
     [SerializeField] GameObject sprite;
     [SerializeField] string npcName = "topHat";
-    NPCDialogueController npcDialogueController;
     Transform cam;
 
     Animator animator;
