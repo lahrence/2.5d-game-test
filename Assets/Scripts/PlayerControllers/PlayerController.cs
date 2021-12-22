@@ -12,7 +12,7 @@ public class PlayerController : MonoBehaviour
     Animator animator;
 
     // Player Movement
-    float speed = 4f;
+    float speed = 3f;
 
     [SerializeField] float height = 1f;
     float turnSmoothTime = 0.1f;
@@ -35,6 +35,7 @@ public class PlayerController : MonoBehaviour
         // Get controller input
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
+        float modifier = Input.GetAxisRaw("Multiplier");
         Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
 
         // Camera and Player local rotation assignment
@@ -45,7 +46,7 @@ public class PlayerController : MonoBehaviour
         float cameraOrbit = (cameraLocalRotationY <= playerLocalRotationY ?
                              playerLocalRotationY - cameraLocalRotationY :
                              360 + playerLocalRotationY - cameraLocalRotationY);
-
+        float speedModifier = 1f;
         if (direction.magnitude >= 0.1f)
         {
             float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cameraLocalRotationY;
@@ -55,7 +56,8 @@ public class PlayerController : MonoBehaviour
             Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
 
             float totalOffset = Mathf.Abs(horizontal) + Mathf.Abs(vertical);
-            float speedModifier = totalOffset > 1 ? 1 : totalOffset;
+            if (modifier < 0.1f) speedModifier = totalOffset > 1 ? 1 : totalOffset;
+            else speedModifier = totalOffset > 1 ? 1.5f : totalOffset * (modifier + 0.5f);
 
             controller.Move(moveDir.normalized * speed * speedModifier * Time.deltaTime);
             transform.position = Vector3.SmoothDamp(transform.position,
@@ -67,6 +69,6 @@ public class PlayerController : MonoBehaviour
         {
             playerState = AnimationController.animations["idle"];
         }
-        currentState = AnimationController.SpriteAnimationPerspective(cameraOrbit, playerState, animator, currentState);
+        currentState = AnimationController.SpriteAnimationPerspective(cameraOrbit, playerState, animator, currentState, speedModifier);
     }
 }

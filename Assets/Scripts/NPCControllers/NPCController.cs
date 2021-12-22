@@ -33,9 +33,6 @@ public class NPCController : MonoBehaviour
                              360 + npcLocalRotation - cameraLocalRotation);
 
         // Change sprite perspective
-        currentState = AnimationController.SpriteAnimationPerspective(cameraOrbit,
-                                                                      npcState,
-                                                                      animator,
-                                                                      currentState);
+        currentState = AnimationController.SpriteAnimationPerspective(cameraOrbit, npcState, animator, currentState, 1f);
     }
 }

@@ -26,10 +26,12 @@ public class AnimationController
     public static string SpriteAnimationPerspective(float cameraOrbit,
                                                     string animation,
                                                     Animator animator,
-                                                    string currentState)
+                                                    string currentState,
+                                                    float speed)
     {
         string newState = currentState;
         float threshold = 22.5f; // 45 / 2
+        animator.speed = speed;
         foreach (KeyValuePair<float, string> rotations in rotationValues)
         {
             // Key value pair <angle in degrees at multiples of 45, camera rotation relative to controller object>
@@ -56,6 +58,7 @@ public class AnimationController
 
         // Play animation at normalized animation time
         animator.Play(newState, 0, time);
+
         return newState;
     }
 
