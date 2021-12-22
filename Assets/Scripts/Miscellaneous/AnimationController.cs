@@ -27,11 +27,7 @@ public class AnimationController
             }
         };
 
-    public static string SpriteAnimationPerspective(float cameraOrbit,
-                                                    string animation,
-                                                    Animator animator,
-                                                    string currentState,
-                                                    float speed)
+    public static string SpriteAnimationPerspective(float cameraOrbit, string animation, Animator animator, string currentState, float speed)
     {
         string newState = currentState;
         float threshold = 22.5f; // 45 / 2
