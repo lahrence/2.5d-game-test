@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NPCController : MonoBehaviour
-{
+public class NPCController : MonoBehaviour {
 
     public Camera cameraObject;
     [SerializeField] GameObject sprite;
     [SerializeField] string npcName = "topHat";
+    [SerializeField] CharacterController controller;
     Transform cam;
 
     Animator animator;
@@ -15,24 +15,17 @@ public class NPCController : MonoBehaviour
     string currentState;
     string npcState;
 
-    void Start()
-    {
+    void Start() {
         cam = cameraObject.transform;
         animator = sprite.GetComponent<Animator>();
-        npcState = AnimationController.animations[npcName]["idle"];
+        //npcState = AnimationController.animations[npcName]["idle"];
     }
 
-    void Update()
-    {
-        float cameraLocalRotation = cam.eulerAngles.y;
-        float npcLocalRotation = transform.eulerAngles.y;
-
-        // Calculate the camera rotation relative to the npc
-        float cameraOrbit = (cameraLocalRotation <= npcLocalRotation ?
-                             npcLocalRotation - cameraLocalRotation :
-                             360 + npcLocalRotation - cameraLocalRotation);
+    void Update() {
 
         // Change sprite perspective
-        currentState = AnimationController.SpriteAnimationPerspective(cameraOrbit, npcState, animator, currentState, 1f);
+        //currentState = AnimationController.SpriteAnimationPerspective(npcState, animator, currentState, 1f);
+
+        controller.SimpleMove(new Vector3(0, 0, 0));
     }
 }

@@ -13,9 +13,9 @@ TagManager:
   - Walls
   - Water
   - UI
-  - 
-  - 
-  - 
+  - Unwalkable
+  - Ground
+  - 3dUI
   - 
   - 
   - 
