@@ -6,7 +6,7 @@ using System.Diagnostics;
 using System;
 
 public class Pathfinding : MonoBehaviour {
-    public bool allowDiagonal = true;
+    public bool allowDiagonal = false;
 	PathRequestManager requestManager;
 	GridInitial grid;
     public GameObject target;
@@ -23,9 +23,6 @@ public class Pathfinding : MonoBehaviour {
 	}
 
 	IEnumerator FindPath(Vector3 startPos, Vector3 targetPos) {
-        Stopwatch sw = new Stopwatch();
-        sw.Start();
-		
 		Vector3[] waypoints = new Vector3[0];
 		bool pathSuccess = false;
 
@@ -42,21 +39,19 @@ public class Pathfinding : MonoBehaviour {
 			while (openSet.Count > 0) {
 				Node node = openSet.RemoveFirst();
 				closedSet.Add(node);
-
 				if (node == targetNode) {
-					sw.Stop();
-					//print("Path found: " + sw.ElapsedMilliseconds + "ms");
 					pathSuccess = true;
 					break;
 				}
-
 				foreach(Node neighbour in grid.GetNeighbours(node)) {
 					if (!neighbour.walkable || closedSet.Contains(neighbour)) {
 						continue;
 					}
 
-					int newCostToNeighbour = node.gCost + GetDistance(node, neighbour);
-					if (newCostToNeighbour < neighbour.gCost || !openSet.Contains(neighbour)) {
+					int newCostToNeighbour = (node.gCost +
+											  GetDistance(node, neighbour));
+					if (newCostToNeighbour < neighbour.gCost
+         				|| !openSet.Contains(neighbour)) {
 						neighbour.gCost = newCostToNeighbour;
 						neighbour.hCost = GetDistance(neighbour, targetNode);
 						neighbour.parent = node;
@@ -108,12 +103,9 @@ public class Pathfinding : MonoBehaviour {
 	int GetDistance(Node nodeA, Node nodeB) {
 		int dstX = Mathf.Abs(nodeA.gridX - nodeB.gridX);
 		int dstY = Mathf.Abs(nodeA.gridY - nodeB.gridY);
-        if (allowDiagonal) {
-		    if (dstX > dstY)
-			    return 14*dstY + 10* (dstX-dstY);
-		    return 14*dstX + 10 * (dstY-dstX);
-        } else {
-            return dstX * 10 + dstY * 10;
-		}
+        
+		if (dstX > dstY)
+			return 14 * dstY + 10 * (dstX - dstY);
+		return 14 * dstX + 10 * (dstY - dstX);
 	}
 }

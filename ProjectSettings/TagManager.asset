@@ -16,6 +16,7 @@ TagManager:
   - Unwalkable
   - Ground
   - 3dUI
+  - Player
   - 
   - 
   - 
@@ -35,10 +36,9 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
-  - 
-  - 
+  - Invisible
+  - PlayerVolume
+  - Post
   m_SortingLayers:
   - name: Default
     uniqueID: 0
