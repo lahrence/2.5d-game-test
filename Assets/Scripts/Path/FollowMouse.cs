@@ -1,45 +1,43 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static CursorManager;
 
 public class FollowMouse : MonoBehaviour {
-    public bool gridVisualize = true;
+    public bool isVisible = true;
 
     [SerializeField] Camera mainCamera;
-    [SerializeField] LayerMask mask;
+    [SerializeField] LayerMask groundMask;
     [SerializeField] LayerMask unwalkableMask;
     [SerializeField] Object marker;
     [SerializeField] GameObject player;
     Unit unit;
     GameObject instancedMarker;
-    public bool success;
-    public Vector3 instanceLocation;
+    [HideInInspector] public bool success;
+    [HideInInspector] public Vector3 instanceLocation;
 
     float horizontal;
     float vertical;
-    public Vector3 direction;
+    [HideInInspector] public Vector3 direction;
 
-    public Texture2D cursor;
-    public Texture2D pointer;
-
-    public int PathLengthLimit = 9;
-    public int pathLength = 0;
+    public int PathLimit = 9;
+    [HideInInspector] public int pathLength = 0;
     bool pathFound;
-    public bool isTracking;
+    [HideInInspector] public bool isTracking;
     [SerializeField] GameObject gridObject;
     GridInitial grid;
     Outline outline;
-    public Material mainMaterial;
+    [SerializeField] Material mainMaterial;
     Vector3 smoothDampVelocity;
     BoxCollider boxCollider;
-    public Vector3 position;
+    [HideInInspector] public Vector3 position;
+    [HideInInspector] public bool controllerMode = false;
 
     void Awake() {
         unit = player.GetComponent<Unit>();
 		grid = gridObject.GetComponent<GridInitial>();
         outline = GetComponent<Outline>();
         boxCollider = GetComponent<BoxCollider>();
-        CursorManager.ChangeCursor(cursor);
     }
 
     void Update() {
@@ -54,7 +52,7 @@ public class FollowMouse : MonoBehaviour {
         if (Physics.Raycast(ray,
                             out RaycastHit raycastHitGround,
                             float.MaxValue,
-                            mask)) {
+                            groundMask)) {
             position = raycastHitGround.point;
             position.y = Mathf.Round(position.y);
 
@@ -75,15 +73,20 @@ public class FollowMouse : MonoBehaviour {
             }
         }
         transform.position = Vector3.SmoothDamp(transform.position, position, ref smoothDampVelocity, 0.025f, Mathf.Infinity);
-        if ((mouseDirection.magnitude >= 0.1f || Input.GetMouseButtonDown(0)) && gridVisualize) {
+        
+        if ((mouseDirection.magnitude >= 0.1f || Input.GetMouseButtonDown(0)) && isVisible && direction.magnitude < 0.1f) {
             gameObject.GetComponent<MeshRenderer>().enabled = true;
-            Cursor.visible = true;
-        } else if (!gridVisualize) {
-            gameObject.GetComponent<MeshRenderer>().enabled = false;
-            Cursor.visible = true;
         } else if (direction.magnitude >= 0.1f) {
             gameObject.GetComponent<MeshRenderer>().enabled = false;
-            Cursor.visible = false;
+        } else if (!isVisible && mouseDirection.magnitude >= 0.1f) {
+            gameObject.GetComponent<MeshRenderer>().enabled = false;
+        }
+        if (mouseDirection.magnitude < 0.1f) {
+            foreach (string name in Input.GetJoystickNames()) {
+                controllerMode = name.Length >= 2;
+                if (controllerMode) break;
+            }
+            Cursor.visible = !controllerMode;
         }
     }
 
@@ -119,42 +122,37 @@ public class FollowMouse : MonoBehaviour {
         }
         if (Physics.Raycast(ray,
                             out RaycastHit raycastHit,
-                            float.MaxValue, mask)) {
+                            float.MaxValue, groundMask)) {
             if (!isWalkable
                 || Vector3.Distance(player.transform.position,
-                                    transform.position) > PathLengthLimit) {
-                if (gridVisualize) {
-                    outline.enabled = true;
-                    outline.OutlineColor = Color.Lerp(outline.OutlineColor, new Color(0.05f,0.05f,0.05f), Mathf.PingPong(Time.time, 1));
-                    mainMaterial.color = Color.Lerp(mainMaterial.color, new Color(0.05f,0.05f,0.05f), Mathf.PingPong(Time.time, 1));
-                    mainMaterial.SetColor("_EmissionColor", Color.Lerp(mainMaterial.GetColor("_EmissionColor"), new Color(0.05f,0.05f,0.05f), Mathf.PingPong(Time.time, 1)));
+                                    transform.position) > PathLimit) {
+                if (isVisible) {
+                    mainMaterial.color = Color.Lerp(mainMaterial.color, new Color(0.6f,0.05f,0.05f, 0.25f), Mathf.PingPong(Time.time, 1));
+                    mainMaterial.SetColor("_EmissionColor", Color.Lerp(mainMaterial.GetColor("_EmissionColor"), new Color(0.6f,0.05f,0.05f), Mathf.PingPong(Time.time, 1)));
                 }
-                CursorManager.ChangeCursor(cursor);
+                Default();
             } else if (!hitList[0]
                        && !hitList[1]
                        && !hitList[2]
                        && !hitList[3]) {
-                if (gridVisualize) {
-                    outline.enabled = false;
-                    mainMaterial.color = Color.Lerp(mainMaterial.color, Color.white, Mathf.PingPong(Time.time, 1));
+                if (isVisible) {
+                    mainMaterial.color = Color.Lerp(mainMaterial.color, new Color(1,1,1,0.25f), Mathf.PingPong(Time.time, 1));
                     mainMaterial.SetColor("_EmissionColor", Color.Lerp(mainMaterial.GetColor("_EmissionColor"), Color.white, Mathf.PingPong(Time.time, 1)));
                 }
-                CursorManager.ChangeCursor(pointer);
+                Pointer();
             } else {
-                if (gridVisualize) {
-                    outline.enabled = true;
-                    outline.OutlineColor = Color.Lerp(outline.OutlineColor, Color.white, Mathf.PingPong(Time.time, 1));
-                    mainMaterial.color = Color.Lerp(mainMaterial.color, Color.white, Mathf.PingPong(Time.time, 1));
+                if (isVisible) {
+                    mainMaterial.color = Color.Lerp(mainMaterial.color, new Color(1,1,1,0.25f), Mathf.PingPong(Time.time, 1));
                     mainMaterial.SetColor("_EmissionColor", Color.Lerp(mainMaterial.GetColor("_EmissionColor"), Color.white, Mathf.PingPong(Time.time, 1)));
                 }
-                CursorManager.ChangeCursor(pointer);
+                Pointer();
             }
         }
         if (Input.GetMouseButtonDown(0)
             && success
             && direction.magnitude < 0.1f
-            && gridVisualize) {
-            if (Vector3.Distance(player.transform.position, transform.position) <= PathLengthLimit) {
+            && isVisible) {
+            if (Vector3.Distance(player.transform.position, transform.position) <= PathLimit) {
                 Destroy(instancedMarker);
                 instanceLocation.y += 0.25f;
                 instancedMarker = (GameObject)Instantiate(marker,

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -33,12 +34,15 @@ public class AnimationManager : MonoBehaviour {
     [SerializeField] GameObject spriteObject;
     PlayerController playerController;
     PlayerSpriteController sprite;
+    float angle;
     float speedModifier;
+    string currentState;
 
     void Awake() {
         animator = GetComponent<Animator>();
         playerController = spriteObject.GetComponent<PlayerController>();
         sprite = GetComponent<PlayerSpriteController>();
+        sprite.OnAngleChange += PlayerSpriteController_OnAngleChange;
     }
 
     void Update() {
@@ -46,7 +50,7 @@ public class AnimationManager : MonoBehaviour {
     }
 
     public string PlayAnimation(string animation, string spriteName) {
-        string newState = sprite.currentState;
+        string newState = currentState;
         animator.speed = playerController.speedModifier;
         animation = animations[spriteName][animation];
         foreach (KeyValuePair<float, string> rotations in rotationValues) {
@@ -55,11 +59,11 @@ public class AnimationManager : MonoBehaviour {
             float rotation = rotations.Key;
             string perspective = rotations.Value;
             // Check if camera is in current octant
-            bool inOctant = sprite.cameraOrbit <= rotation + Threshold &&
-                            sprite.cameraOrbit >= rotation - Threshold;
+            bool inOctant = angle <= rotation + Threshold &&
+                            angle >= rotation - Threshold;
             if (inOctant) {
                 newState = ChangeAnimationState(animation + perspective,
-                                                sprite.currentState,
+                                                currentState,
                                                 animator);
             }
         }
@@ -83,5 +87,10 @@ public class AnimationManager : MonoBehaviour {
         float rawTime = animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
         float time = rawTime < 1 ? rawTime : rawTime - (int)rawTime;
         return time;
+    }
+
+    private void PlayerSpriteController_OnAngleChange(object sender, PlayerSpriteController.OnAngleChangeEventArgs e) {
+        angle = e.angle;
+        currentState = e.currentState;
     }
 }

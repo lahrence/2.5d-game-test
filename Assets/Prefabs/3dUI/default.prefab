@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 7696595951836096084}
   - component: {fileID: 7696595951836096087}
   - component: {fileID: 7696595951836096082}
-  - component: {fileID: 7696595951836096086}
   - component: {fileID: 7696595951836096083}
   m_Layer: 8
   m_Name: default
@@ -97,38 +96,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2, y: 0.16, z: 2}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &7696595951836096086
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7696595951836096073}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a736cdbcedbd424bbcafa75e1ded73e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gridVisualize: 1
-  mainCamera: {fileID: 0}
-  mask:
-    serializedVersion: 2
-    m_Bits: 128
-  unwalkableMask:
-    serializedVersion: 2
-    m_Bits: 64
-  marker: {fileID: 8168282630166038840, guid: cfc7d319c2ad12a4993a56d3e91b7ff7, type: 3}
-  player: {fileID: 0}
-  success: 0
-  instanceLocation: {x: 0, y: 0, z: 0}
-  direction: {x: 0, y: 0, z: 0}
-  cursor: {fileID: 2800000, guid: f8b46751ac9bb0448a4195ac92af16a0, type: 3}
-  pointer: {fileID: 0}
-  PathLengthLimit: 13
-  pathLength: 0
-  isTracking: 0
-  gridObject: {fileID: 0}
-  mainMaterial: {fileID: 2100000, guid: 8fbe129c0a7745d49a1ccfa6b2213168, type: 2}
 --- !u!114 &7696595951836096083
 MonoBehaviour:
   m_ObjectHideFlags: 0

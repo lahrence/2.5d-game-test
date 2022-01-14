@@ -9,7 +9,7 @@ public class Pathfinding : MonoBehaviour {
     public bool allowDiagonal = false;
 	PathRequestManager requestManager;
 	GridInitial grid;
-    public GameObject target;
+    [SerializeField] GameObject target;
     FollowMouse followMouse;
 
 	void Awake() {

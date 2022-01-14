@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Unit : MonoBehaviour {
-    public GameObject target;
+    [SerializeField] GameObject target;
     FollowMouse followMouse;
     [SerializeField] CharacterController controller;
-    float speed = 125f;
+    float speed = 2.5f;
     Vector3[] path;
-    public int targetIndex;
+    int targetIndex;
     float margin = 0.075f;
     string playerState;
-    public bool isTracking = false;
+    [HideInInspector] public bool isTracking = false;
     PlayerController pc;
     AnimationManager animationManager;
     PlayerSpriteController playerSC;
@@ -45,7 +45,7 @@ public class Unit : MonoBehaviour {
 
     public void OnPathFound(Vector3[] newPath, bool pathSuccessful) {
         followMouse.success = pathSuccessful;
-        if (pathSuccessful && Vector3.Distance(target.transform.position, transform.position) <= followMouse.PathLengthLimit) {
+        if (pathSuccessful && Vector3.Distance(target.transform.position, transform.position) <= followMouse.PathLimit) {
             path = newPath;
             followMouse.pathLength = newPath.Length;
             targetIndex = 0;
@@ -86,8 +86,9 @@ public class Unit : MonoBehaviour {
                                                   rotation,
                                                   Time.deltaTime * 25f);
 
-            Vector3 moveSpeed = transform.forward * speed * 0.02f;
+            Vector3 moveSpeed = transform.forward * speed;
             controller.SimpleMove(moveSpeed);
+            transform.position = new Vector3(transform.position.x, 0.75f, transform.position.z);
             yield return null;
         }
     }

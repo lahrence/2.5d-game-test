@@ -1,21 +1,19 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Cinemachine;
 
-public class PlayerController : MonoBehaviour {
+public class Player : MonoBehaviour {
     public Camera cameraObject;
     [SerializeField] GameObject sprite;
     [SerializeField] CharacterController controller;
     PlayerSpriteController playerSC;
     Transform cam;
-    bool turnLock = true;
+    public bool turnLock = true;
 
     Animator animator;
 
     // Player Movement
-    float speed = 1.6666f;
+    public float speed = 1.5f;
 
     float turnSmoothTime = 0.05f;
     float turnSmoothVelocity;
@@ -23,8 +21,8 @@ public class PlayerController : MonoBehaviour {
     CapsuleCollider capsuleCollider;
     Unit unit;
     bool isTracking;
-    [HideInInspector] public float speedModifier = 0;
-    [HideInInspector] public bool isMoving;
+    public float speedModifier;
+    public bool isMoving;
 
     AnimationManager animationManager;
 
@@ -66,7 +64,14 @@ public class PlayerController : MonoBehaviour {
             Vector3 moveDir = (Quaternion.Euler(0f, targetAngle, 0f)
                                * Vector3.forward);
             float totalOffset = Mathf.Abs(horizontal) + Mathf.Abs(vertical);
-            speedModifier = totalOffset >= 0.9 ? 1.5f : totalOffset;
+            if (modifier < 0.1f) {
+                speedModifier = totalOffset > 1 ? 1 : totalOffset;
+            }
+            else {
+                speedModifier = (totalOffset > 1
+                                 ? 1.5f
+                                 : totalOffset * (modifier + 0.5f));
+            }
             isMoving = true;
             
             controller.SimpleMove(moveDir.normalized * speed * speedModifier);

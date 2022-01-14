@@ -30,5 +30,6 @@ public class CinemachineAdjust : MonoBehaviour {
                                                          Quaternion.Euler(0, rotateValue, 0),
                                                          0.825f).eulerAngles.y;
         }
+        cinemachine.m_Lens.NearClipPlane = 0.001f;
     }
 }
