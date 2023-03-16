@@ -25,6 +25,7 @@ public class GridInitial : MonoBehaviour {
 
     void Update() {
         allowDiagonal = pathfinding.allowDiagonal;
+		CreateGrid();
     }
 
     public int MaxSize {

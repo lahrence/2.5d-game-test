@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &7696595951836096073
+--- !u!1 &4919290912225533178
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,49 +8,48 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7696595951836096085}
-  - component: {fileID: 7696595951836096084}
-  - component: {fileID: 7696595951836096087}
-  - component: {fileID: 7696595951836096082}
-  - component: {fileID: 7696595951836096083}
-  m_Layer: 8
-  m_Name: default
+  - component: {fileID: 4247732805017833409}
+  - component: {fileID: 1307685631727416971}
+  - component: {fileID: 2522137864001393183}
+  - component: {fileID: 4919290912225533179}
+  m_Layer: 0
+  m_Name: Waypoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &7696595951836096085
+--- !u!4 &4247732805017833409
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7696595951836096073}
+  m_GameObject: {fileID: 4919290912225533178}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.48, y: 0.48, z: 0.48}
+  m_LocalPosition: {x: 0.43393064, y: 0.272, z: -5.725895}
+  m_LocalScale: {x: 0.15, y: 0.25, z: 0.15}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &7696595951836096084
+--- !u!33 &1307685631727416971
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7696595951836096073}
-  m_Mesh: {fileID: -2432090755550338912, guid: 38214a751d775ab42b4098a97f6e61c7, type: 3}
---- !u!23 &7696595951836096087
+  m_GameObject: {fileID: 4919290912225533178}
+  m_Mesh: {fileID: -2432090755550338912, guid: 58e51cf0ad7cba9438c6866dff552b9b, type: 3}
+--- !u!23 &2522137864001393183
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7696595951836096073}
-  m_Enabled: 0
-  m_CastShadows: 0
+  m_GameObject: {fileID: 4919290912225533178}
+  m_Enabled: 1
+  m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 1
@@ -58,10 +57,10 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
+  m_RenderingLayerMask: 257
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 8fbe129c0a7745d49a1ccfa6b2213168, type: 2}
+  - {fileID: 2100000, guid: 111ee85e279a1544482c53907e2483ed, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -83,34 +82,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &7696595951836096082
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7696595951836096073}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 2, y: 0.16, z: 2}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &7696595951836096083
+--- !u!114 &4919290912225533179
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7696595951836096073}
+  m_GameObject: {fileID: 4919290912225533178}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Script: {fileID: 11500000, guid: 9916a6d51a800db499b6a1c5822fa25e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  outlineMode: 4
-  outlineColor: {r: 0.43137255, g: 0.01183696, b: 0.01183696, a: 1}
-  outlineWidth: 2
-  precomputeOutline: 0
-  bakeKeys: []
-  bakeValues: []
+  rate: 0.02
+  maxLimit: 1
+  minLimit: 0
+  offset: 0.5

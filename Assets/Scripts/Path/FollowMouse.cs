@@ -20,7 +20,7 @@ public class FollowMouse : MonoBehaviour {
     float vertical;
     [HideInInspector] public Vector3 direction;
 
-    public int PathLimit = 9;
+    public int PathLimit = 128;
     [HideInInspector] public int pathLength = 0;
     bool pathFound;
     [HideInInspector] public bool isTracking;
@@ -75,18 +75,15 @@ public class FollowMouse : MonoBehaviour {
         transform.position = Vector3.SmoothDamp(transform.position, position, ref smoothDampVelocity, 0.025f, Mathf.Infinity);
         
         if ((mouseDirection.magnitude >= 0.1f || Input.GetMouseButtonDown(0)) && isVisible && direction.magnitude < 0.1f) {
-            gameObject.GetComponent<MeshRenderer>().enabled = true;
+            //gameObject.GetComponent<MeshRenderer>().enabled = true;
         } else if (direction.magnitude >= 0.1f) {
             gameObject.GetComponent<MeshRenderer>().enabled = false;
         } else if (!isVisible && mouseDirection.magnitude >= 0.1f) {
             gameObject.GetComponent<MeshRenderer>().enabled = false;
         }
-        if (mouseDirection.magnitude < 0.1f) {
-            foreach (string name in Input.GetJoystickNames()) {
-                controllerMode = name.Length >= 2;
-                if (controllerMode) break;
-            }
-            Cursor.visible = !controllerMode;
+
+        if (direction.magnitude >= 0.1f) {
+            controllerMode = true;
         }
     }
 
@@ -153,11 +150,12 @@ public class FollowMouse : MonoBehaviour {
             && direction.magnitude < 0.1f
             && isVisible) {
             if (Vector3.Distance(player.transform.position, transform.position) <= PathLimit) {
+                controllerMode = false;
                 Destroy(instancedMarker);
-                instanceLocation.y += 0.25f;
+                instanceLocation.y -= 0.01f;
                 instancedMarker = (GameObject)Instantiate(marker,
                                                         instanceLocation,
-                                                        Quaternion.identity);
+                                                        Quaternion.Euler(0, 0, 0));
             }
         } else if (!unit.isTracking) {
             Destroy(instancedMarker);

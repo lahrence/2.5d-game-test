@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Sprite
-  m_Shader: {fileID: -6465566751694194690, guid: 0a9233f222503774a853559e2d415297, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: 6f01245c698b3ae47bc225be812f158e, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -38,9 +38,18 @@ Material:
     m_Floats:
     - Alpha_Clip: 0.25
     - Vector1_2e4342d7c9e24d67a10c730d6223d790: 0
+    - Vector1_3558bcccd57d4ed0a60f5a46219024db: 1
+    - Vector1_59f2a502475a479db96a8a9c4b278288: 1
     - Vector1_c80f683616a7499882b19beeb83fb436: 1
+    - _Alpha: 1
     - _AlphaClip: 0.25
+    - _Metallic: 0
     - _Opacity: 1
+    - _Radius: -0.01
+    - _Range: 10
+    - _Smoothness: 0
     m_Colors:
+    - _BaseColor: {r: 1, g: 1, b: 1, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _EmissionsColor: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
